@@ -1,0 +1,29 @@
+spring:
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    gateway:
+      routes:
+        - id: airport-service
+          uri: http://airport-service
+          predicates:
+            - Path=/airports/**
+          filters:
+            - StripPrefix=1
+        - id: weather-service
+          uri: http://weather-service
+          predicates:
+            - Path=/weather/**
+          filters:
+            - StripPrefix=1
+        - id: conditions-service
+          uri: http://conditions-service
+          predicates:
+            - Path=/conditions/**
+          filters:
+            - StripPrefix=1
+    config:
+      enabled: false
+
+#MH NOTE: Next step: externalize routing to config server.
